@@ -1,5 +1,6 @@
 package com.hwb.demo;
 
+import com.hwb.demo.pipeline.ESPipeLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.Page;
@@ -7,16 +8,14 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
-import java.sql.SQLException;
-
 /**
  * Created by hwb
  * On 2017/2/3 10:24
  */
 public class DoubanPageProcessor implements PageProcessor {
 
-    private Site site = Site.me().setRetryTimes(3).setSleepTime(SLEEP_TIME)
-            .addCookie("bid", "WDlGEdFAEe2")
+    private Site site = Site.me().setTimeOut(10000).setRetryTimes(3).setSleepTime(SLEEP_TIME)
+            .addCookie("bid", "WESGEdFAEe2")
             .setUserAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) " +
                     "Chrome/56.0.2924.76 Safari/537.36");
 
@@ -45,17 +44,25 @@ public class DoubanPageProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        MysqlPipeLine mysqlPipeLine = new MysqlPipeLine();
-        try {
-            mysqlPipeLine.init();
+        ESPipeLine esPipeLine = new ESPipeLine();
             Spider.create(new DoubanPageProcessor())
-                    .addPipeline(mysqlPipeLine).addUrl("https://movie.douban.com/top250?start=0&filter=")
+                    .addPipeline(esPipeLine).addUrl("https://movie.douban.com/top250?start=0&filter=")
                     .thread(5)
                     .run();
-            mysqlPipeLine.close();
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        }
+        esPipeLine.close();
     }
+//    public static void main(String[] args) {
+//        MysqlPipeLine mysqlPipeLine = new MysqlPipeLine();
+//        try {
+//            mysqlPipeLine.init();
+//            Spider.create(new DoubanPageProcessor())
+//                    .addPipeline(mysqlPipeLine).addUrl("https://movie.douban.com/top250?start=0&filter=")
+//                    .thread(5)
+//                    .run();
+//            mysqlPipeLine.close();
+//        } catch (SQLException e) {
+//            LOG.error(e.getMessage(), e);
+//        }
+//    }
 
 }

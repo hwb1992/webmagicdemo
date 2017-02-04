@@ -1,5 +1,6 @@
-package com.hwb.demo;
+package com.hwb.demo.pipeline;
 
+import com.hwb.demo.util.MysqlJdbcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.ResultItems;

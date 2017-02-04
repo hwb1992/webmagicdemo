@@ -23,7 +23,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.hwb.demo.MysqlPipeLine" level="INFO" additivity="false">
+    <logger name="com.hwb.demo.pipeline.MysqlPipeLine" level="INFO" additivity="false">
         <appender-ref ref="file"/>
     </logger>
 
