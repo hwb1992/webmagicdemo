@@ -26,8 +26,7 @@ public class DoubanPageProcessor implements PageProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(DoubanPageProcessor.class);
 
     public void process(Page page) {
-        // 文章页
-        if (page.getUrl().regex(FILM_LIST).match()) {
+        if (page.getUrl().regex(FILM_LIST).match()) {  // 文章页
             page.addTargetRequests(page.getHtml().xpath("//*[@class=\"item\"]/div/a")
                     .links().regex(FILM_CONTENT).all());
             page.addTargetRequests(page.getHtml().xpath("//*[@id=\"content\"]/div/div[1]/div[2]").links().regex
@@ -35,7 +34,6 @@ public class DoubanPageProcessor implements PageProcessor {
         } else { // 列表页
             page.putField("image", page.getHtml().xpath("//*[@id=\"mainpic\"]/a/img/@src"));
             page.putField("name", page.getHtml().xpath("//*[@id=\"content\"]/h1/span[1]/text()"));
-
         }
     }
 

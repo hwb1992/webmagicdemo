@@ -1,7 +1,6 @@
 package com.hwb.demo.pipeline;
 
 import com.google.common.collect.Maps;
-import com.hwb.demo.model.Film;
 import com.hwb.demo.util.ESUtil;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -21,7 +20,6 @@ import java.util.Map;
 public class ESPipeLine implements Pipeline {
 
     private static final String INDEX = "douban";
-
     private static final String TYPE = "film";
     private static final Logger LOG = LoggerFactory.getLogger(ESPipeLine.class);
 
@@ -30,9 +28,6 @@ public class ESPipeLine implements Pipeline {
             String image = (String) resultItems.getAll().get("image").toString();
             String name = (String) resultItems.getAll().get("name").toString();
             TransportClient transportClient = ESUtil.getClient();
-            Film film = new Film();
-            film.setImageSrc(image);
-            film.setFileName(name);
             Map map = Maps.newHashMap();
             map.put("image", image);
             map.put("name", name);
